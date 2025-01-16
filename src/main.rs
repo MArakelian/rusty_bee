@@ -8,7 +8,6 @@ fn main() {
     let display = path.display();
 
     // Open the path
-
     let mut file = match File::open(&path) {
         Err(why) => panic!("couldn't open {}: {}", display, why),
         Ok(file) => file,
@@ -21,3 +20,9 @@ fn main() {
         Ok(_) => print!("{}", words),
     }
 }
+
+//  TODO:
+//  Add features:
+//  - [ ] read in letter required in all words
+//  - [ ] read in letter set with which to make solution words.
+//  - [ ] iterate over words to select solutions.
