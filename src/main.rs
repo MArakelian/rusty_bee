@@ -4,16 +4,11 @@ use std::fs::read_to_string;
 use std::path::Path;
 use text_io::read;
 
-/// Reads the words from the dictionary txt file and
-/// returns a Vec<String>
-fn read_lines(filename: &Path) -> Vec<String> {
-    read_to_string(filename)
-        .unwrap()
-        .lines()
-        .map(String::from)
-        .collect()
-}
+static DICTIONARY_WORDS: &str = include_str!("../assets/words.txt");
 
+fn create_string(dict_words: &str) -> Vec<String> {
+    dict_words.lines().map(String::from).collect()
+}
 
 /// Gets the center letter required to be in all the
 /// solution words.
@@ -23,14 +18,18 @@ fn get_magic_letter() -> String {
     magic_letter
 }
 
-
-
 fn main() {
     // create a path to the dictionary file.
     let path = Path::new("assets/words.txt");
 
     // create the dictionary of words (a Vec<String>)
-    let words = read_lines(path);
+    //let words = read_lines(path);
+
+    let words = create_string(DICTIONARY_WORDS);
+
+    for word in words {
+        println!("{}", word);
+    }
 
     // get the magic letter
     let required_letter = get_magic_letter();

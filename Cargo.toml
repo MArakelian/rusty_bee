@@ -2,6 +2,8 @@
 name = "rusty_bee"
 version = "0.1.0"
 edition = "2021"
+description = "Solve the NYT Spelling Bee game in the terminal."
+repository = "https://github.com/MArakelian/rusty_bee" 
 
 [dependencies]
 text_io = "0.1.12"
