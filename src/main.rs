@@ -8,7 +8,16 @@ static DICTIONARY_WORDS: &str = include_str!("../assets/words.txt");
 
 /// Create the dictionary of words as a Vec<String>
 fn create_string(dict_words: &str) -> Vec<String> {
-    dict_words.lines().map(String::from).collect()
+    let initial_dictionary: Vec<String> = dict_words.lines().map(String::from).collect();
+
+    let mut processed_dictionary = Vec::new();
+    for word in initial_dictionary {
+        if word.len() > 3 {
+            processed_dictionary.push(word);
+        }
+    }
+
+    processed_dictionary
 }
 
 /// Gets the center letter required to be in all the
@@ -34,12 +43,7 @@ fn get_required_letters() -> Vec<String> {
 }
 
 fn main() {
-    // create a path to the dictionary file.
-    let path = Path::new("assets/words.txt");
-
-    // create the dictionary of words (a Vec<String>)
-    //let words = read_lines(path);
-
+    // create a dictionary of words
     let words = create_string(DICTIONARY_WORDS);
 
     // get the magic letter
