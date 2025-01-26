@@ -1,5 +1,6 @@
 #![allow(unused)]
 
+use std::collections::HashSet;
 use std::fs::read_to_string;
 use std::path::Path;
 use text_io::read;
@@ -44,6 +45,22 @@ fn get_required_letters() -> Vec<String> {
     required_letters_processed //return required
 }
 
+/// Process the required letters and words to provide the
+/// user with solutions.
+fn process_solutions(required_letters_final: Vec<String>, words: Vec<String>) -> Vec<String> {
+    // Convert the vector of letters into a HashSet of characters for quick lookup.
+    let allowed_letters: HashSet<char> = required_letters_final
+        .iter()
+        .flat_map(|s| s.chars())
+        .collect();
+
+    // Filter words, retaining only those composed entirely of allowed letters.
+    words
+        .into_iter()
+        .filter(|word| word.chars().all(|c| allowed_letters.contains(&c)))
+        .collect()
+}
+
 fn main() {
     // get the magic letter
     let required_letter = get_magic_letter();
@@ -56,13 +73,10 @@ fn main() {
     // get the other required letters
     let mut required_letter_set = get_required_letters();
     required_letter_set.push(required_letter);
-}
 
-//  TODO:
-//  Add features:
-//  - [X] create a Vec<String> of words instead of one long String
-//  - [X] read in letter required in all words
-//  - [X] read in letter set with which to make solution words.
-//      - [ ] Make a more ergonomic input system by allowing more than one letter at one time
-//  - [ ] iterate over words to select solutions.
-//  - [ ] handle different file paths for Windows
+    let solution_set = process_solutions(required_letter_set, words);
+
+    for solution in solution_set {
+        println!("{}", solution);
+    }
+}
